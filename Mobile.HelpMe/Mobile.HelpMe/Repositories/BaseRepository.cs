@@ -22,29 +22,33 @@ namespace Mobile.HelpMe.Repositories
 
         protected async Task<HttpResponseMessage> Get(string url, string path)
         {
-            var uri = $"{url}/{path}";
+            var uri = $"{url}{path}";
 
-            using(var client = new HttpClient())
-            {
-                var resp = await client.GetAsync(uri);
+            
+                var resp = await _client.GetAsync(uri);
                 if (resp.StatusCode != System.Net.HttpStatusCode.OK)
                     Debug.WriteLine("Error retreiving data from API. " + resp.StatusCode);
                 return resp;
-            }
             
         }
 
         protected async Task<HttpResponseMessage> PostAsync(string url, string path, string body)
         {
-            var uri = $"{url}/{path}";
-
-            using (var client = new HttpClient())
+            
+            var resp = new HttpResponseMessage();
+            try
             {
-                var resp = await client.PostAsync(uri, new StringContent(body));
-                if (resp.StatusCode != System.Net.HttpStatusCode.OK)
-                    Debug.WriteLine($"Error posting to api. {resp.StatusCode}");
-                return resp;
+                var generatedUri = $"{url}{path}";
+                var uri = new Uri(generatedUri);
+                //var content = new StringContent(body, System.Text.Encoding.UTF8, "application/json");
+                resp = await _client.PostAsync(uri, new StringContent(body, System.Text.Encoding.UTF8, "application/json"));
+            }catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
+            if (resp.StatusCode != System.Net.HttpStatusCode.OK)
+                Debug.WriteLine($"Error posting to api. {resp.StatusCode}");
+            return resp;
         }
     }
 }

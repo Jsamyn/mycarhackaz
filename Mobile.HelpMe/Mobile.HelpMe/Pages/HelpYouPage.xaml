@@ -20,6 +20,7 @@
                                                   BackgroundColor="{StaticResource ListItemBackgroundColor}">
                                         <Label Text="{Binding Problem}" Style="{StaticResource ListViewItemHeaderText}"/>
                                         <Label Text="{Binding Username}" Style="{StaticResource ListViewItemText}"/>
+                                         <Label Text="{Binding UserphoneNumber}" Style="{StaticResource ListViewItemText}"/>
                                      </StackLayout>
                                      <StackLayout Padding="5"
                                                   Margin="5"

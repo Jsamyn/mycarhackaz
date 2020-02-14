@@ -12,6 +12,8 @@ namespace Mobile.HelpMe.Services
     {
         IUserRepository _userRepository;
 
+        public User CurrentUser {get; set;} = null;
+
         public UserService(IUserRepository userRepo)
         {
             _userRepository = userRepo;
@@ -36,7 +38,7 @@ namespace Mobile.HelpMe.Services
                 Password = password
             };
             var jsonData = JsonConvert.SerializeObject(loginReq);
-            await _userRepository.Login(jsonData);
+            CurrentUser = await _userRepository.Login(jsonData);
         }
     }
 }

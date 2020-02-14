@@ -14,7 +14,7 @@ namespace Mobile.HelpMe.Repositories
 
         public UserRepository()
         {
-            _baseUrl = "http://hackaz.justincanode.com/api/users";
+            _baseUrl = AppConstants.BaseUrl;
         }
 
         public async Task CreateUser(string jsonContent)
@@ -33,7 +33,7 @@ namespace Mobile.HelpMe.Repositories
 
         public async Task<User> Login(string jsonContent)
         {
-            string path = "/api/authenticate";
+            string path = "/api/authentication";
             var resp = await PostAsync(_baseUrl, path, jsonContent);
             var user = JsonConvert.DeserializeObject<User>(resp.Content.ToString());
             return user;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FreshMvvm;
@@ -15,6 +16,7 @@ namespace Mobile.HelpMe.PageModels
 
 
         #region Properties
+
         private string _username;
         public string Username
         {
@@ -29,6 +31,12 @@ namespace Mobile.HelpMe.PageModels
             set => SetValue(ref _password, value);
         }
 
+        private bool _incorrectPass;
+        private bool IncorrectPass
+        {
+            get => _incorrectPass;
+            set => SetValue(ref _incorrectPass, value);
+        }
         #endregion
 
         #region Commands
@@ -48,8 +56,15 @@ namespace Mobile.HelpMe.PageModels
         {
             if(Password != null && Username != null)
             {
-                await _userService.SignIn(Username, Password);
+                try
+                {
+                    await _userService.SignIn(Username, Password);
+                }catch(Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             }
+
             
             var tabbedNav = new FreshTabbedNavigationContainer("secondNavPage");
             tabbedNav.AddTab<MainPageModel>("Home", null);

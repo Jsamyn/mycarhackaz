@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mobile.HelpMe.Interfaces.Repository;
 using Mobile.HelpMe.Models;
+using Newtonsoft.Json;
 
 namespace Mobile.HelpMe.Repositories
 {
@@ -28,9 +30,19 @@ namespace Mobile.HelpMe.Repositories
             throw new NotImplementedException();
         }
 
+
+
         public Task ResolveHelpRequest(string resolveRequest)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<HelpRequest>> GetRequests()
+        {
+            var path = "/api/helpRequests";
+            var resp = await Get(_baseUrl, path);
+            var requests = JsonConvert.DeserializeObject<IEnumerable<HelpRequest>>(resp.Content.ToString());
+            return requests;
         }
     }
 }

@@ -11,5 +11,6 @@ namespace Mobile.HelpMe.Models
         public string Username { get; set; }
         public string UserEmail { get; set; }
         public string Distance { get; set; }
+        public string UserphoneNumber { get; set; }
     }
 }
